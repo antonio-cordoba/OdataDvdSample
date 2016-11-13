@@ -1,0 +1,560 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GreenBoxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="aspect">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="format" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="capacity">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dvd">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="upc" Type="nvarchar" MaxLength="50" />
+          <Property Name="release_date" Type="datetime" />
+          <Property Name="studio_id" Type="int" />
+          <Property Name="aspect_code" Type="int" />
+          <Property Name="rating_code" Type="int" />
+          <Property Name="genre_code" Type="int" />
+          <Property Name="status_code" Type="int" />
+        </EntityType>
+        <EntityType Name="dvd_partaker">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dvd_id" Type="int" Nullable="false" />
+          <Property Name="partaker_id" Type="int" Nullable="false" />
+          <Property Name="capacity_code" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="genre">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="partaker">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="512" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rating">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="studio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dvd_aspect">
+          <End Role="aspect" Type="Self.aspect" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspect">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="aspect_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_genre">
+          <End Role="genre" Type="Self.genre" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="genre_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_partaker_capacity">
+          <End Role="capacity" Type="Self.capacity" Multiplicity="1" />
+          <End Role="dvd_partaker" Type="Self.dvd_partaker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="capacity">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd_partaker">
+              <PropertyRef Name="capacity_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_partaker_dvd">
+          <End Role="dvd" Type="Self.dvd" Multiplicity="1" />
+          <End Role="dvd_partaker" Type="Self.dvd_partaker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dvd">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dvd_partaker">
+              <PropertyRef Name="dvd_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_partaker_partaker">
+          <End Role="partaker" Type="Self.partaker" Multiplicity="1" />
+          <End Role="dvd_partaker" Type="Self.dvd_partaker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="partaker">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dvd_partaker">
+              <PropertyRef Name="partaker_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_rating">
+          <End Role="rating" Type="Self.rating" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rating">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="rating_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_status">
+          <End Role="status" Type="Self.status" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="status_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_studio">
+          <End Role="studio" Type="Self.studio" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="studio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="studio_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GreenBoxModelStoreContainer">
+          <EntitySet Name="aspect" EntityType="Self.aspect" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="capacity" EntityType="Self.capacity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dvd" EntityType="Self.dvd" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dvd_partaker" EntityType="Self.dvd_partaker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="genre" EntityType="Self.genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="partaker" EntityType="Self.partaker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rating" EntityType="Self.rating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="studio" EntityType="Self.studio" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dvd_aspect" Association="Self.FK_dvd_aspect">
+            <End Role="aspect" EntitySet="aspect" />
+            <End Role="dvd" EntitySet="dvd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_genre" Association="Self.FK_dvd_genre">
+            <End Role="genre" EntitySet="genre" />
+            <End Role="dvd" EntitySet="dvd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_partaker_capacity" Association="Self.FK_dvd_partaker_capacity">
+            <End Role="capacity" EntitySet="capacity" />
+            <End Role="dvd_partaker" EntitySet="dvd_partaker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_partaker_dvd" Association="Self.FK_dvd_partaker_dvd">
+            <End Role="dvd" EntitySet="dvd" />
+            <End Role="dvd_partaker" EntitySet="dvd_partaker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_partaker_partaker" Association="Self.FK_dvd_partaker_partaker">
+            <End Role="partaker" EntitySet="partaker" />
+            <End Role="dvd_partaker" EntitySet="dvd_partaker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_rating" Association="Self.FK_dvd_rating">
+            <End Role="rating" EntitySet="rating" />
+            <End Role="dvd" EntitySet="dvd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_status" Association="Self.FK_dvd_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="dvd" EntitySet="dvd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_studio" Association="Self.FK_dvd_studio">
+            <End Role="studio" EntitySet="studio" />
+            <End Role="dvd" EntitySet="dvd" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GreenBoxModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="aspect">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="format" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="dvds" Relationship="Self.FK_dvd_aspect" FromRole="aspect" ToRole="dvd" />
+        </EntityType>
+        <EntityType Name="capacity">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="dvd_partakers" Relationship="GreenBoxModel.FK_dvd_partaker_capacity" FromRole="capacity" ToRole="dvd_partaker" />
+        </EntityType>
+        <EntityType Name="dvd">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="upc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="release_date" Type="DateTime" Precision="3" />
+          <Property Name="studio_id" Type="Int32" />
+          <Property Name="aspect_code" Type="Int32" />
+          <Property Name="rating_code" Type="Int32" />
+          <Property Name="genre_code" Type="Int32" />
+          <Property Name="status_code" Type="Int32" />
+          <NavigationProperty Name="aspect" Relationship="Self.FK_dvd_aspect" FromRole="dvd" ToRole="aspect" />
+          <NavigationProperty Name="genre" Relationship="Self.FK_dvd_genre" FromRole="dvd" ToRole="genre" />
+          <NavigationProperty Name="rating" Relationship="Self.FK_dvd_rating" FromRole="dvd" ToRole="rating" />
+          <NavigationProperty Name="status" Relationship="Self.FK_dvd_status" FromRole="dvd" ToRole="status" />
+          <NavigationProperty Name="studio" Relationship="Self.FK_dvd_studio" FromRole="dvd" ToRole="studio" />
+          <NavigationProperty Name="dvd_partakers" Relationship="GreenBoxModel.FK_dvd_partaker_dvd" FromRole="dvd" ToRole="dvd_partaker" />
+        </EntityType>
+        <EntityType Name="genre">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="dvds" Relationship="Self.FK_dvd_genre" FromRole="genre" ToRole="dvd" />
+        </EntityType>
+        <EntityType Name="partaker">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="dvd_partakers" Relationship="GreenBoxModel.FK_dvd_partaker_partaker" FromRole="partaker" ToRole="dvd_partaker" />
+        </EntityType>
+        <EntityType Name="rating">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="dvds" Relationship="Self.FK_dvd_rating" FromRole="rating" ToRole="dvd" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="dvds" Relationship="Self.FK_dvd_status" FromRole="status" ToRole="dvd" />
+        </EntityType>
+        <EntityType Name="studio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="dvds" Relationship="Self.FK_dvd_studio" FromRole="studio" ToRole="dvd" />
+        </EntityType>
+        <Association Name="FK_dvd_aspect">
+          <End Role="aspect" Type="Self.aspect" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspect">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="aspect_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_genre">
+          <End Role="genre" Type="Self.genre" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="genre_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_rating">
+          <End Role="rating" Type="Self.rating" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rating">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="rating_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_status">
+          <End Role="status" Type="Self.status" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="status_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_studio">
+          <End Role="studio" Type="Self.studio" Multiplicity="0..1" />
+          <End Role="dvd" Type="Self.dvd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="studio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dvd">
+              <PropertyRef Name="studio_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GreenBoxEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="aspects" EntityType="Self.aspect" />
+          <EntitySet Name="capacities" EntityType="Self.capacity" />
+          <EntitySet Name="dvds" EntityType="Self.dvd" />
+          <EntitySet Name="genres" EntityType="Self.genre" />
+          <EntitySet Name="partakers" EntityType="Self.partaker" />
+          <EntitySet Name="ratings" EntityType="Self.rating" />
+          <EntitySet Name="status" EntityType="Self.status" />
+          <EntitySet Name="studios" EntityType="Self.studio" />
+          <AssociationSet Name="FK_dvd_aspect" Association="Self.FK_dvd_aspect">
+            <End Role="aspect" EntitySet="aspects" />
+            <End Role="dvd" EntitySet="dvds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_genre" Association="Self.FK_dvd_genre">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="dvd" EntitySet="dvds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_rating" Association="Self.FK_dvd_rating">
+            <End Role="rating" EntitySet="ratings" />
+            <End Role="dvd" EntitySet="dvds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_status" Association="Self.FK_dvd_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="dvd" EntitySet="dvds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_studio" Association="Self.FK_dvd_studio">
+            <End Role="studio" EntitySet="studios" />
+            <End Role="dvd" EntitySet="dvds" />
+          </AssociationSet>
+          <EntitySet Name="dvd_partakers" EntityType="GreenBoxModel.dvd_partaker" />
+          <AssociationSet Name="FK_dvd_partaker_capacity" Association="GreenBoxModel.FK_dvd_partaker_capacity">
+            <End Role="capacity" EntitySet="capacities" />
+            <End Role="dvd_partaker" EntitySet="dvd_partakers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_partaker_dvd" Association="GreenBoxModel.FK_dvd_partaker_dvd">
+            <End Role="dvd" EntitySet="dvds" />
+            <End Role="dvd_partaker" EntitySet="dvd_partakers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dvd_partaker_partaker" Association="GreenBoxModel.FK_dvd_partaker_partaker">
+            <End Role="partaker" EntitySet="partakers" />
+            <End Role="dvd_partaker" EntitySet="dvd_partakers" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="dvd_partaker">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dvd_id" Type="Int32" Nullable="false" />
+          <Property Name="partaker_id" Type="Int32" Nullable="false" />
+          <Property Name="capacity_code" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="capacity" Relationship="GreenBoxModel.FK_dvd_partaker_capacity" FromRole="dvd_partaker" ToRole="capacity" />
+          <NavigationProperty Name="dvd" Relationship="GreenBoxModel.FK_dvd_partaker_dvd" FromRole="dvd_partaker" ToRole="dvd" />
+          <NavigationProperty Name="partaker" Relationship="GreenBoxModel.FK_dvd_partaker_partaker" FromRole="dvd_partaker" ToRole="partaker" />
+        </EntityType>
+        <Association Name="FK_dvd_partaker_capacity">
+          <End Type="GreenBoxModel.capacity" Role="capacity" Multiplicity="1" />
+          <End Type="GreenBoxModel.dvd_partaker" Role="dvd_partaker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="capacity">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="dvd_partaker">
+              <PropertyRef Name="capacity_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_partaker_dvd">
+          <End Type="GreenBoxModel.dvd" Role="dvd" Multiplicity="1" />
+          <End Type="GreenBoxModel.dvd_partaker" Role="dvd_partaker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dvd">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dvd_partaker">
+              <PropertyRef Name="dvd_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dvd_partaker_partaker">
+          <End Type="GreenBoxModel.partaker" Role="partaker" Multiplicity="1" />
+          <End Type="GreenBoxModel.dvd_partaker" Role="dvd_partaker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="partaker">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dvd_partaker">
+              <PropertyRef Name="partaker_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GreenBoxModelStoreContainer" CdmEntityContainer="GreenBoxEntities">
+          <EntitySetMapping Name="aspects">
+            <EntityTypeMapping TypeName="GreenBoxModel.aspect">
+              <MappingFragment StoreEntitySet="aspect">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="format" ColumnName="format" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="capacities">
+            <EntityTypeMapping TypeName="GreenBoxModel.capacity">
+              <MappingFragment StoreEntitySet="capacity">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dvds">
+            <EntityTypeMapping TypeName="GreenBoxModel.dvd">
+              <MappingFragment StoreEntitySet="dvd">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="upc" ColumnName="upc" />
+                <ScalarProperty Name="release_date" ColumnName="release_date" />
+                <ScalarProperty Name="studio_id" ColumnName="studio_id" />
+                <ScalarProperty Name="aspect_code" ColumnName="aspect_code" />
+                <ScalarProperty Name="rating_code" ColumnName="rating_code" />
+                <ScalarProperty Name="genre_code" ColumnName="genre_code" />
+                <ScalarProperty Name="status_code" ColumnName="status_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="genres">
+            <EntityTypeMapping TypeName="GreenBoxModel.genre">
+              <MappingFragment StoreEntitySet="genre">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="partakers">
+            <EntityTypeMapping TypeName="GreenBoxModel.partaker">
+              <MappingFragment StoreEntitySet="partaker">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ratings">
+            <EntityTypeMapping TypeName="GreenBoxModel.rating">
+              <MappingFragment StoreEntitySet="rating">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status">
+            <EntityTypeMapping TypeName="GreenBoxModel.status">
+              <MappingFragment StoreEntitySet="status">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="studios">
+            <EntityTypeMapping TypeName="GreenBoxModel.studio">
+              <MappingFragment StoreEntitySet="studio">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dvd_partakers">
+            <EntityTypeMapping TypeName="GreenBoxModel.dvd_partaker">
+              <MappingFragment StoreEntitySet="dvd_partaker">
+                <ScalarProperty Name="capacity_code" ColumnName="capacity_code" />
+                <ScalarProperty Name="partaker_id" ColumnName="partaker_id" />
+                <ScalarProperty Name="dvd_id" ColumnName="dvd_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

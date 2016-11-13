@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f6735a82d4e34e3c957c5662fe4af916" Name="Diagram1">
+        <EntityTypeShape EntityType="GreenBoxModel.aspect" Width="1.5" PointX="1.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenBoxModel.capacity" Width="1.5" PointX="10.125" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenBoxModel.dvd" Width="1.5" PointX="4.625" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenBoxModel.genre" Width="1.5" PointX="7.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenBoxModel.partaker" Width="1.5" PointX="10.125" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenBoxModel.rating" Width="1.5" PointX="1.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenBoxModel.status" Width="1.5" PointX="1.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenBoxModel.studio" Width="1.5" PointX="4.75" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="GreenBoxModel.FK_dvd_aspect" ManuallyRouted="false" />
+        <AssociationConnector Association="GreenBoxModel.FK_dvd_genre" ManuallyRouted="false" />
+        <AssociationConnector Association="GreenBoxModel.FK_dvd_rating" ManuallyRouted="false" />
+        <AssociationConnector Association="GreenBoxModel.FK_dvd_status" ManuallyRouted="false" />
+        <AssociationConnector Association="GreenBoxModel.FK_dvd_studio" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GreenBoxModel.dvd_partaker" Width="1.5" PointX="7.75" PointY="4.375" />
+        <AssociationConnector Association="GreenBoxModel.FK_dvd_partaker_capacity" />
+        <AssociationConnector Association="GreenBoxModel.FK_dvd_partaker_dvd" />
+        <AssociationConnector Association="GreenBoxModel.FK_dvd_partaker_partaker" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
