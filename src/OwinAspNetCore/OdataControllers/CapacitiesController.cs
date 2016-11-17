@@ -4,7 +4,7 @@ namespace OwinAspNetCore
 {
     public class CapacitiesController : OdataMaster<capacity>
     {
-        public CapacitiesController(ISomeDependency someDependency) : base(someDependency)
+        public CapacitiesController(GreenBoxEntities dbc) : base(dbc)
         {
             this.table = db.capacities;
         }

@@ -4,7 +4,7 @@ namespace OwinAspNetCore
 {
     public class PartakersController : OdataMaster<partaker>
     {
-        public PartakersController(ISomeDependency someDependency) : base(someDependency)
+        public PartakersController(GreenBoxEntities dbc) : base(dbc)
         {
             this.table = db.partakers;
         }

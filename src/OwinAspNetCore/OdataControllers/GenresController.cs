@@ -4,7 +4,7 @@ namespace OwinAspNetCore
 {
     public class GenresController : OdataMaster<genre>
     {
-        public GenresController(ISomeDependency someDependency) : base(someDependency)
+        public GenresController(GreenBoxEntities dbc) : base(dbc)
         {
             this.table = db.genres;
         }

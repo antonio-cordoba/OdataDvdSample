@@ -4,7 +4,7 @@ namespace OwinAspNetCore
 {
     public class StatusesController : OdataMaster<status>
     {
-        public StatusesController(ISomeDependency someDependency) : base(someDependency)
+        public StatusesController(GreenBoxEntities dbc) : base(dbc)
         {
             this.table = db.status;
         }

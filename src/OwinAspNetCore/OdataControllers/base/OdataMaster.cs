@@ -7,14 +7,16 @@ using System.Web.Http;
 using System.Web.OData;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 
 namespace OwinAspNetCore
 {
     public class OdataMaster<t> : ODataController where t : class
     {
-        protected GreenBoxEntities db = new GreenBoxEntities();
+        protected GreenBoxEntities db;
+
         protected DbSet<t> table { get; set; }
-        public OdataMaster(ISomeDependency someDependency) { }
+        public OdataMaster(GreenBoxEntities dbc) { db = dbc; }
 
         [EnableQuery]
         public IQueryable<t> Get()

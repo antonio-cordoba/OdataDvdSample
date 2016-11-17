@@ -4,7 +4,7 @@ namespace OwinAspNetCore
 {
     public class DvdsController : OdataMaster<dvd>
     {
-        public DvdsController(ISomeDependency someDependency) : base(someDependency)
+        public DvdsController(GreenBoxEntities dbc) : base(dbc)
         {
             this.table = db.dvds;
         }

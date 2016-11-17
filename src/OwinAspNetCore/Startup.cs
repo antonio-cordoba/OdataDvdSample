@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Owin;
 using Owin;
 using System;
+using System.Data.Entity.Infrastructure;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -39,12 +40,13 @@ namespace OwinAspNetCore
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddScoped<GreenBoxEntities>(_ => new GreenBoxEntities(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddScoped<GreenBoxEntities>(_ => new GreenBoxEntities(Configuration.GetConnectionString("DefaultConnection")));
 
 
             ContainerBuilder autofacContainerBuilder = new ContainerBuilder();
             autofacContainerBuilder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            autofacContainerBuilder.RegisterType<SomeDependency>().As<ISomeDependency>();
+            //autofacContainerBuilder.RegisterType<SomeDependency>().As<ISomeDependency>();
+            autofacContainerBuilder.RegisterType<GreenBoxEntities>();
             autofacContainerBuilder.Populate(services);
             AutofacContainer = autofacContainerBuilder.Build();
 

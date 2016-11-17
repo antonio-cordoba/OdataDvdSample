@@ -4,7 +4,7 @@ namespace OwinAspNetCore
 {
     public class AspectsController : OdataMaster<aspect>
     {
-        public AspectsController(ISomeDependency someDependency) : base(someDependency)
+        public AspectsController(GreenBoxEntities dbc) : base(dbc)
         {
             this.table = db.aspects;
         }

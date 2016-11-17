@@ -4,7 +4,7 @@ namespace OwinAspNetCore
 {
     public class StudiosController : OdataMaster<studio>
     {
-        public StudiosController(ISomeDependency someDependency) : base(someDependency)
+        public StudiosController(GreenBoxEntities dbc) : base(dbc)
         {
             this.table = db.studios;
         }

@@ -4,7 +4,7 @@ namespace OwinAspNetCore
 {
     public class RatingsController : OdataMaster<rating>
     {
-        public RatingsController(ISomeDependency someDependency) : base(someDependency)
+        public RatingsController(GreenBoxEntities dbc) : base(dbc)
         {
             this.table = db.ratings;
         }
